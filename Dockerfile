@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # Configurar variables de entorno para la construcción
-ENV VITE_API_URL=https://ab5d-34-238-108-151.ngrok-free.app
+ENV VITE_API_URL=https://98ec-34-238-108-151.ngrok-free.app
 
 # Construir la aplicación
 RUN npm run build
