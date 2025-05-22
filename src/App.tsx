@@ -23,23 +23,23 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        {/* Rutas protegidas */}
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Layout><Home /></Layout>
-          </ProtectedRoute>
-        } />
-        <Route path="/create" element={
-          <ProtectedRoute>
-            <Layout><CreateUrl /></Layout>
-          </ProtectedRoute>
-        } />
+            {/* Rutas protegidas */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Layout><Home /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/create" element={
+              <ProtectedRoute>
+                <Layout><CreateUrl /></Layout>
+              </ProtectedRoute>
+            } />
 
-        {/* Rutas públicas */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/r/:code" element={<Redirect />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+            {/* Rutas públicas */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/r/:code" element={<Redirect />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
     </AnimatePresence>
   );
 };

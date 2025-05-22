@@ -13,6 +13,9 @@ RUN npm ci
 # Copiar el código fuente
 COPY . .
 
+# Configurar variables de entorno para la construcción
+ENV VITE_API_URL=http://34.238.108.151:8000
+
 # Construir la aplicación
 RUN npm run build
 

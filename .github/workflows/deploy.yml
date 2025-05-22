@@ -52,6 +52,8 @@ jobs:
           memory: 2
           port: 8080
           wait-for-service-stability: true
+          runtime-environment-variables: |
+            VITE_API_URL=http://34.238.108.151:8000
 
       - name: Resultado del despliegue
         run: echo "Aplicación desplegada en ${{ steps.deploy-apprunner.outputs.service-url }}"
