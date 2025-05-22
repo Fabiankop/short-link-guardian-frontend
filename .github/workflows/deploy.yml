@@ -53,7 +53,7 @@ jobs:
           port: 8080
           wait-for-service-stability: true
           runtime-environment-variables: |
-            VITE_API_URL=https://98ec-34-238-108-151.ngrok-free.app
+            VITE_API_URL=https://pangolin-happy-grackle.ngrok-free.app
 
       - name: Resultado del despliegue
         run: echo "Aplicación desplegada en ${{ steps.deploy-apprunner.outputs.service-url }}"
