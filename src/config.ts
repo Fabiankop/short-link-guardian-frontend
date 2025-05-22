@@ -1,7 +1,7 @@
 // Configuración global de la aplicación
 
 // URL base de la API - Se obtiene del archivo .env
-export const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+export const BASE_URL = import.meta.env.VITE_API_URL;
 const version = 'v1';
 const route = 'api';
 
