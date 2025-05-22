@@ -17,7 +17,7 @@
 
 /* Estilos para gradientes y fondos */
 .bg-gradient {
-  background: linear-gradient(135deg, #FF5F38 0%, #FF7854 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ffa854 100%);
 }
 
 /* Ajustes responsivos */
@@ -30,6 +30,6 @@
 
 /* Ajustes de accesibilidad */
 .focus-visible:focus {
-  outline: 2px solid #FF5F38;
+  outline: 2px solid #ffaa00;
   outline-offset: 2px;
 }

@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,7 +25,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#FF5F38', // Naranja brillante similar a spot2.mx
+					DEFAULT: '#ffaa00', // Naranja brillante similar a spot2.mx
 					hover: '#E04F2F',
 					foreground: '#ffffff'
 				},
@@ -98,7 +97,7 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out'
 			},
 			fontFamily: {
-				'sans': ['Inter', 'sans-serif'],
+				'sans': ['Montserrat', 'Inter', 'sans-serif'],
 				'heading': ['Montserrat', 'sans-serif']
 			},
 			backgroundImage: {

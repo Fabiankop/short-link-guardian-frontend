@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Spot2 - URL Shortener
 
-## Project info
+Este proyecto es un acortador de enlaces seguro y fácil de usar, desarrollado con React, Vite y Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/b131b2ff-66fe-46a6-978c-e5366efd679c
+## Características principales
+- Acortamiento de URLs de forma segura
+- Interfaz moderna y responsiva
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Requisitos previos
+- Node.js >= 18
+- npm >= 9
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b131b2ff-66fe-46a6-978c-e5366efd679c) and start prompting.
+## Configuración de Variables de Entorno
 
-Changes made via Lovable will be committed automatically to this repo.
+El proyecto utiliza variables de entorno para su configuración. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-**Use your preferred IDE**
+```
+# URL base de la API
+VITE_API_URL=http://localhost:8000
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# Tiempo de expiración del token en milisegundos (24 horas por defecto)
+VITE_TOKEN_EXPIRATION=86400000
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Nombre de la aplicación
+VITE_APP_NAME=Spot2
 
-Follow these steps:
+# Timeout para peticiones API en milisegundos
+VITE_API_TIMEOUT=10000
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+También puedes copiar el archivo `.env.example` y personalizarlo según tus necesidades.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Instalación
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
+```
+
+---
+
+## Levantar el proyecto en desarrollo
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+La aplicación estará disponible en `http://localhost:8080` (o el puerto que indique Vite).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Estructura del proyecto
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+├── src/
+│   ├── components/      # Componentes reutilizables
+│   ├── pages/           # Vistas principales
+│   ├── services/        # Lógica de negocio y API
+│   ├── hooks/           # Custom hooks
+│   ├── App.tsx          # Componente raíz
+│   ├── App.css          # Estilos personalizados
+│   ├── index.css        # Estilos globales y Tailwind
+│   └── main.tsx         # Entry point
+├── public/
+├── tailwind.config.ts   # Configuración de Tailwind (Montserrat como fuente principal)
+├── vite.config.ts       # Configuración de Vite
+└── README.md            # Este archivo
+```
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Buenas prácticas
+- Usa nombres descriptivos y tipado fuerte.
+- Mantén la lógica desacoplada y reutilizable.
+- Aplica el principio de responsabilidad única en componentes y funciones.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b131b2ff-66fe-46a6-978c-e5366efd679c) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Licencia
+[MIT](LICENSE)
