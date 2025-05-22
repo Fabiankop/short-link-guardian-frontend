@@ -1,0 +1,56 @@
+# Dependencias
+node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+pnpm-debug.log
+.pnp
+.pnp.js
+.pnpm-store
+
+# Directorios de construcción
+dist
+build
+out
+.next
+.nuxt
+.output
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE/editor
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.vim
+
+# Archivos de CI/CD y testing
+coverage
+.nyc_output
+jest-report
+
+# Archivos de Docker (excepto los que necesitamos)
+.dockerignore
+Dockerfile.dev
+
+# Archivos git
+.git
+.gitignore
+.github
+
+# Otros
+README.md
+LICENSE
+*.md
+.cursor

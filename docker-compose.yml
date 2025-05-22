@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: short-link-guardian
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    # Si necesitas variables de entorno, descomenta y configura:
+    # environment:
+    #   - API_URL=https://api.example.com
+    networks:
+      - app-network
+
+  # Si necesitas un backend, descomenta esta sección:
+  # api:
+  #   image: nombre-de-tu-api
+  #   container_name: short-link-api
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
