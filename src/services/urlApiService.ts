@@ -86,7 +86,9 @@ export const addUrl = async (originalUrl: string): Promise<UrlItem | null> => {
  */
 export const findUrlByCode = async (code: string): Promise<string | null> => {
   try {
-    const response = await api.get<Url | ApiResponse<Url>>(`/r/url/${code}`);
+    // Usar la API con la ruta correcta
+    const response = await api.get<Url | ApiResponse<Url>>(`/r/api/url/${code}`);
+    console.log('Respuesta de findUrlByCode:', response);
 
     // Comprobar la estructura de la respuesta
     if ('url' in response && typeof response.url === 'string') {
@@ -114,39 +116,27 @@ export const findUrlByCode = async (code: string): Promise<string | null> => {
  */
 export const findUrlByCodeDirect = async (code: string): Promise<string | null> => {
   try {
-    // Construimos la URL específica usando BASE_URL
-    const baseUrlParts = BASE_URL.split('/');
-    const baseUrl = baseUrlParts[0] + '//' + baseUrlParts[2]; // Obtiene http://hostname:port
+    // Usar directamente la ruta especificada
+    const url = `${BASE_URL}/r/api/url/${code}`;
+    console.log('Intentando obtener URL con:', url);
 
-    // Probamos con dos posibles rutas
-    const routes = [
-      `/r/api/url/${code}`,
-      `/api/url/${code}`
-    ];
-
-    let data = null;
-
-    // Intentamos cada ruta hasta que una funcione
-    for (const route of routes) {
-      try {
-        const response = await fetch(`${baseUrl}${route}`, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          data = await response.json();
-          break;
-        }
-      } catch (err) {
-        // Continuamos con la siguiente ruta
+    // Añadir el encabezado para evitar advertencias de ngrok
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
       }
+    });
+
+    if (!response.ok) {
+      console.error(`Error en respuesta: ${response.status} ${response.statusText}`);
+      return null;
     }
 
-    if (!data) return null;
+    const data = await response.json();
+    console.log('Respuesta obtenida:', data);
 
     // Verificar estructura de respuesta
     if ('url' in data && typeof data.url === 'string') {
@@ -237,17 +227,9 @@ export const trackUrlAccess = async (code: string): Promise<boolean> => {
  */
 export const trackUrlAccessDirect = async (code: string): Promise<boolean> => {
   try {
-    // Construimos la URL específica
-    const baseUrlParts = BASE_URL.split('/');
-    const baseUrl = baseUrlParts[0] + '//' + baseUrlParts[2]; // Obtiene http://hostname:port
-
-    // Rutas posibles para registrar acceso
-    const routes = [
-      `/r/api/urls/${code}/access`,
-      `/api/urls/${code}/access`,
-      `/r/api/url/${code}/access`,
-      `/api/url/${code}/access`
-    ];
+    // Usar directamente la ruta especificada
+    const url = `${BASE_URL}/r/api/url/${code}/access`;
+    console.log('Intentando registrar acceso con:', url);
 
     const accessData: UrlAccessData = {
       timestamp: new Date().toISOString(),
@@ -255,29 +237,24 @@ export const trackUrlAccessDirect = async (code: string): Promise<boolean> => {
       referer: document.referrer || null
     };
 
-    // Intentamos con cada ruta hasta que una funcione
-    for (const route of routes) {
-      try {
-        const response = await fetch(`${baseUrl}${route}`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(accessData)
-        });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
+      body: JSON.stringify(accessData)
+    });
 
-        if (response.ok) {
-          return true;
-        }
-      } catch (err) {
-        // Continuamos con la siguiente ruta
-      }
+    if (!response.ok) {
+      console.error(`Error en respuesta de tracking: ${response.status} ${response.statusText}`);
+      return false;
     }
 
-    return false;
+    return true;
   } catch (error) {
-    console.error('Error general al registrar acceso directo:', error);
+    console.error('Error al registrar acceso directamente:', error);
     return false;
   }
 };
