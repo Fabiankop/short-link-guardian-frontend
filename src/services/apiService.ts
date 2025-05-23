@@ -37,6 +37,7 @@ export const fetchApi = async <T> (
 
   const defaultHeaders: HeadersInit = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    'ngrok-skip-browser-warning': 'true',
     ...headers,
   };
   console.log('API Request - Headers:', defaultHeaders);
