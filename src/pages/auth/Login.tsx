@@ -53,7 +53,6 @@ const Login: React.FC = () => {
       }
     } catch (err) {
       setError('Ocurrió un error al intentar iniciar sesión');
-      console.error(err);
     } finally {
       setIsSubmitting(false);
     }
