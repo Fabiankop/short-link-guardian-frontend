@@ -8,8 +8,8 @@ import { AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState<string>('admin@example.com');
-  const [password, setPassword] = useState<string>('supersecret');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
