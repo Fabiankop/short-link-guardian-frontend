@@ -93,7 +93,6 @@ const CreateUrl: React.FC = () => {
         });
       }
     } catch (err) {
-      console.error('Error al crear URL:', err);
       const errorMessage = err instanceof Error ? err.message : 'Ocurrió un error desconocido.';
       setError(errorMessage);
       toast({

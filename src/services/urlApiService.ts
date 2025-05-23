@@ -43,7 +43,6 @@ export const getUrls = async (): Promise<UrlItem[]> => {
 
     return [];
   } catch (error) {
-    console.error('Error al obtener URLs:', error);
     return [];
   }
 };
@@ -74,7 +73,6 @@ export const addUrl = async (originalUrl: string): Promise<UrlItem | null> => {
     // Si la respuesta es directamente el objeto UrlItem
     return response as UrlItem;
   } catch (error) {
-    console.error('Error al crear URL corta:', error);
     return null;
   }
 };
@@ -88,7 +86,6 @@ export const findUrlByCode = async (code: string): Promise<string | null> => {
   try {
     // Usar la API con la ruta correcta
     const response = await api.get<Url | ApiResponse<Url>>(`/r/api/url/${code}`);
-    console.log('Respuesta de findUrlByCode:', response);
 
     // Comprobar la estructura de la respuesta
     if ('url' in response && typeof response.url === 'string') {
@@ -103,7 +100,6 @@ export const findUrlByCode = async (code: string): Promise<string | null> => {
 
     return null;
   } catch (error) {
-    console.error('Error al buscar URL:', error);
     return null;
   }
 };
@@ -118,7 +114,6 @@ export const findUrlByCodeDirect = async (code: string): Promise<string | null> 
   try {
     // Usar directamente la ruta especificada
     const url = `${BASE_URL}/r/api/url/${code}`;
-    console.log('Intentando obtener URL con:', url);
 
     // Añadir el encabezado para evitar advertencias de ngrok
     const response = await fetch(url, {
@@ -131,12 +126,10 @@ export const findUrlByCodeDirect = async (code: string): Promise<string | null> 
     });
 
     if (!response.ok) {
-      console.error(`Error en respuesta: ${response.status} ${response.statusText}`);
       return null;
     }
 
     const data = await response.json();
-    console.log('Respuesta obtenida:', data);
 
     // Verificar estructura de respuesta
     if ('url' in data && typeof data.url === 'string') {
@@ -152,7 +145,6 @@ export const findUrlByCodeDirect = async (code: string): Promise<string | null> 
 
     return null;
   } catch (error) {
-    console.error('Error al buscar URL directamente:', error);
     return null;
   }
 };
@@ -179,7 +171,6 @@ export const getUrlStats = async (code: string): Promise<UrlStats | null> => {
 
     return null;
   } catch (error) {
-    console.error('Error al obtener estadísticas:', error);
     return null;
   }
 };
@@ -194,7 +185,6 @@ export const deleteUrl = async (id: number): Promise<boolean> => {
     await api.delete(`/urls/${id}`);
     return true;
   } catch (error) {
-    console.error('Error al eliminar URL:', error);
     return false;
   }
 };
@@ -215,7 +205,6 @@ export const trackUrlAccess = async (code: string): Promise<boolean> => {
     await api.post(`/urls/${code}/access`, accessData);
     return true;
   } catch (error) {
-    console.error('Error al registrar acceso:', error);
     return false;
   }
 };
@@ -229,7 +218,6 @@ export const trackUrlAccessDirect = async (code: string): Promise<boolean> => {
   try {
     // Usar directamente la ruta especificada
     const url = `${BASE_URL}/r/api/url/${code}/access`;
-    console.log('Intentando registrar acceso con:', url);
 
     const accessData: UrlAccessData = {
       timestamp: new Date().toISOString(),
@@ -248,13 +236,11 @@ export const trackUrlAccessDirect = async (code: string): Promise<boolean> => {
     });
 
     if (!response.ok) {
-      console.error(`Error en respuesta de tracking: ${response.status} ${response.statusText}`);
       return false;
     }
 
     return true;
   } catch (error) {
-    console.error('Error al registrar acceso directamente:', error);
     return false;
   }
 };

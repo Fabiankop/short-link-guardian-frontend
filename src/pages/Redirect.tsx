@@ -82,7 +82,7 @@ const Redirect: React.FC = () => {
               await trackUrlAccess(code);
             }
           } catch (trackError) {
-            console.error("Error al registrar acceso, continuando con redirección:", trackError);
+            // Error al registrar acceso, continuamos con la redirección
           }
 
           // Preparar para la redirección
@@ -101,7 +101,6 @@ const Redirect: React.FC = () => {
           setLoadingState(LoadingState.ERROR);
         }
       } catch (err) {
-        console.error('Error al redirigir:', err);
         setError('Ocurrió un error al procesar la URL corta.');
         setLoadingState(LoadingState.ERROR);
       }

@@ -10,11 +10,9 @@ const NotFound: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Efecto para registrar intentos de acceso a rutas no existentes
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
+    // Ruta no encontrada: {location.pathname}
   }, [location.pathname]);
 
   const handleGoHome = () => {

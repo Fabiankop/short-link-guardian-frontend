@@ -20,8 +20,6 @@ export const fetchApi = async <T> (
   } = options;
 
   let url = `${API_BASE_URL}${endpoint}`;
-  console.log(`API Request - URL: ${url}`);
-  console.log(`API Request - Method: ${options.method || 'GET'}`);
 
   if (params) {
     const searchParams = new URLSearchParams();
@@ -29,23 +27,19 @@ export const fetchApi = async <T> (
       searchParams.append(key, value);
     });
     url += `?${searchParams.toString()}`;
-    console.log(`API Request - Params: ${searchParams.toString()}`);
   }
 
   const token = localStorage.getItem('auth_token');
-  console.log(`API Request - Token exists: ${!!token}`);
 
   const defaultHeaders: HeadersInit = {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     'ngrok-skip-browser-warning': 'true',
     ...headers,
   };
-  console.log('API Request - Headers:', defaultHeaders);
 
   let processedBody: BodyInit | undefined = body as BodyInit | undefined;
   const contentTypeHeader = defaultHeaders['Content-Type'] || defaultHeaders['content-type'];
   const effectiveContentType = (contentTypeHeader || 'application/json') as string;
-  console.log(`API Request - Content-Type: ${effectiveContentType}`);
 
   // Solo procesar el body si es un objeto literal (plain object)
   if (body && typeof body === 'object' &&
@@ -56,12 +50,8 @@ export const fetchApi = async <T> (
     } else if (effectiveContentType.includes('application/json')) {
       processedBody = JSON.stringify(body);
     }
-    console.log('API Request - Body (object):', body);
   } else if (body instanceof URLSearchParams && effectiveContentType.includes('application/x-www-form-urlencoded')) {
     processedBody = body.toString();
-    console.log('API Request - Body (URLSearchParams):', body.toString());
-  } else if (body) {
-    console.log('API Request - Body (other):', body);
   }
 
   if (!contentTypeHeader && !(processedBody instanceof FormData)) {
@@ -72,7 +62,6 @@ export const fetchApi = async <T> (
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    console.log('API Request - Executing fetch...');
     const response = await fetch(url, {
       ...restOptions,
       headers: defaultHeaders,
@@ -81,18 +70,14 @@ export const fetchApi = async <T> (
     });
 
     clearTimeout(timeoutId);
-    console.log(`API Response - Status: ${response.status} ${response.statusText}`);
-    console.log('API Response - Headers:', Object.fromEntries([...response.headers.entries()]));
 
     // Verificar si la respuesta es exitosa
     if (!response.ok) {
       let errorData: Record<string, unknown>;
       try {
         errorData = await response.json();
-        console.log('API Response - Error data:', errorData);
       } catch (e) {
         errorData = { message: response.statusText };
-        console.log('API Response - Could not parse error data');
       }
 
       throw new ApiError(
@@ -104,29 +89,24 @@ export const fetchApi = async <T> (
 
     // Si la respuesta es 204 No Content o no tiene contenido
     if (response.status === 204 || response.headers.get('content-length') === '0') {
-      console.log('API Response - No content to parse');
       return {} as T;
     }
 
     // Procesar la respuesta como JSON
     const responseData = await response.json();
-    console.log('API Response - Data:', responseData);
     return responseData as T;
   } catch (error: unknown) {
     clearTimeout(timeoutId);
 
     if (error instanceof Error && error.name === 'AbortError') {
-      console.error('API Request - Timeout error');
       throw new TimeoutError();
     }
 
     if (error instanceof ApiError) {
-      console.error(`API Request - API error: ${error.message}, status: ${error.status}`);
       throw error;
     }
 
     const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
-    console.error(`API Request - Generic error: ${errorMessage}`);
     throw new ApiError(errorMessage, 500);
   }
 };
